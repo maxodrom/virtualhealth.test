@@ -1,0 +1,15 @@
+{
+  "name": "maxodrom/virtualhealth",
+  "description": "Virtualhealth test task",
+  "homepage": "https://github.com/maxodrom/virtualhealth",
+  "type": "project",
+  "license": "",
+  "minimum-stability": "stable",
+  "require": {
+    "php": ">=5.3",
+    "yiisoft/yii": "*"
+  },
+  "config": {
+    "process-timeout": 1800
+  }
+}
