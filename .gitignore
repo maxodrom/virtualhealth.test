@@ -1,6 +1,14 @@
+# General folders & files
+./idea
+/vendor
+composer.lock
+
+# Yii specific folder & files
 assets/*
 !assets/.gitignore
+!assets/.gitkeep
 protected/runtime/*
 !protected/runtime/.gitignore
+!protected/runtime/.gitkeep
 protected/data/*.db
 themes/classic/views/
