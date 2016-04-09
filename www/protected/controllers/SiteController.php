@@ -21,19 +21,101 @@ class SiteController extends Controller
 		);
 	}
 
-	/**
-	 * This is the default 'index' action that is invoked
-	 * when an action is not explicitly requested by users.
-	 */
-	public function actionIndex()
-	{
-		// renders the view file 'protected/views/site/index.php'
-		// using the default layout 'protected/views/layouts/main.php'
-		$this->render('index');
-	}
+    /**
+     * Problem solving using AR-model approach.
+     */
+    public function actionIndex()
+    {
+        $criteria = new CDbCriteria([
+            'select' => array('t.cx cx', 't.rx rx', 't.title title', 'r.ndc ndc'),
+            'condition' => 'title LIKE :like',
+            'params' => [
+                ':like' => 'title 1%'
+            ],
+            'join' => 'LEFT JOIN {{rel}} r ON r.cx = t.cx',
+        ]);
 
-	/**
-	 * This is the action to handle external exceptions.
+        $dataProvider = new CActiveDataProvider(
+            TbSource::model()->cache(
+                Yii::app()->params['defaultCacheDuration'],
+                null,
+                2 // 1-й запрос - подсчет общего кол-ва записей, 2-й - извлечение записей для страницы; поэтому ставим 2
+            ),
+            array(
+                'criteria' => $criteria,
+                'pagination' => array(
+                    'pageSize' => Yii::app()->params['pageSize'],
+                    'pageVar' => 'page'
+                ),
+                'sort' => array(
+                    'sortVar' => 'sort',
+                    'attributes' => array(
+                        'cx',
+                        'rx',
+                        'title',
+                        'ndc' => array(
+                            'asc' => 'ndc ASC',
+                            'desc' => 'ndc DESC'
+                        )
+                    )
+                )
+            )
+        );
+
+        $this->render('index', [
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    /**
+     * Using DAO to solve the task.
+     */
+    public function actionDao()
+    {
+        /** @var $command CDbCommand */
+        $command = Yii::app()->db
+            ->cache(Yii::app()->params['defaultCacheDuration'], null, 2)
+            ->createCommand();
+
+        $command->select(array('t.cx cx', 't.rx rx', 't.title title', 'r.ndc ndc'))
+            ->from('{{source}} t')
+            ->leftJoin(
+                '{{rel}} r',
+                'r.cx = t.cx'
+            )
+            ->where(array('like', 'title', 'title 1%'));
+
+        $countCommand = clone $command;
+        $countCommand->select('count(*)');
+
+        $dataProvider = new CSqlDataProvider(
+            $command,
+            array(
+                'totalItemCount'=> $countCommand->queryScalar(),
+                'keyField' => 'cx',
+                'pagination' => array(
+                    'pageSize' => Yii::app()->params['pageSize'],
+                    'pageVar' => 'page'
+                ),
+                'sort' => array(
+                    'sortVar' => 'sort',
+                    'attributes' => array(
+                        'cx',
+                        'rx',
+                        'title',
+                        'ndc'
+                    )
+                )
+            )
+        );
+
+        $this->render('index', [
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    /**
+     * This is the action to handle external exceptions.
 	 */
 	public function actionError()
 	{
