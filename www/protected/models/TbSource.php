@@ -10,6 +10,11 @@
  */
 class TbSource extends CActiveRecord
 {
+    /**
+     * @var string Used as a virtual attribute
+     */
+    public $ndc;
+
 	/**
 	 * @return string the associated database table name
 	 */
