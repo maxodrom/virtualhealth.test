@@ -13,15 +13,7 @@ return array(
 	'components'=>array(
 
 		// database settings are configured in database.php
-		//'db'=>require(dirname(__FILE__).'/database.php'),
-		'db' => [
-			'class' => 'CDbConnection',
-			'connectionString' => 'mysql:host=localhost;dbname=virtualhealth',
-			'username' => 'root',
-			'password' => '',
-			'charset'=>'utf8',
-			'emulatePrepare' => true,  // необходимо для некоторых версий инсталляций MySQL
-		],
+		'db'=>require(dirname(__FILE__).'/database.php'),
 
 		'log'=>array(
 			'class'=>'CLogRouter',

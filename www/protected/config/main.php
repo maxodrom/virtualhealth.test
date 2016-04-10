@@ -57,20 +57,7 @@ return [
         ],
 
         // database settings are configured in database.php
-        //'db'=>require(dirname(__FILE__).'/database.php'),
-        'db' => [
-            'class' => 'CDbConnection',
-            'connectionString' => 'mysql:host=localhost;dbname=virtualhealth',
-            'username' => 'root',
-            'password' => '',
-            'tablePrefix' => 'tb_',
-            'charset'=>'utf8',
-            'emulatePrepare' => true,  // необходимо для некоторых версий инсталляций MySQL
-            'schemaCacheID' => 'cache',
-            'schemaCachingDuration' => 3600,
-            'enableParamLogging' => true,
-            'enableProfiling' => true,
-        ],
+        'db'=>require(dirname(__FILE__).'/database.php'),
 
         'errorHandler' => [
             // use 'site/error' action to display errors
@@ -85,7 +72,7 @@ return [
                     'levels' => 'error, warning',
                 ],
                 // uncomment the following to show log messages on web pages
-
+                /*
                 [
                     'class' => 'CWebLogRoute',
                 ],
@@ -93,7 +80,7 @@ return [
                     'class' => 'CProfileLogRoute',
                     'report' => 'summary'
                 ]
-
+                */
             ],
         ],
 
