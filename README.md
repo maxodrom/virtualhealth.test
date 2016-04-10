@@ -57,7 +57,7 @@ yiic migrate
 
 -- Dump completed on 2014-12-15 11:56:33
  ... done (time: 14.588s)
-*** applied m160409_222243_create_table_source (time: 17.683s)
+*** applied m160409_222243_init (time: 17.683s)
 
 
 Migrated up successfully.
