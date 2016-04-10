@@ -1,6 +1,6 @@
 <?php
 
-class m160409_222243_create_table_source extends CDbMigration
+class m160409_222243_init extends CDbMigration
 {
 	public function safeUp()
 	{
