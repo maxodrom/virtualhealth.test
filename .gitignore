@@ -1,5 +1,5 @@
 # General folders & files
-./idea
+/.idea
 /vendor
 composer.lock
 
